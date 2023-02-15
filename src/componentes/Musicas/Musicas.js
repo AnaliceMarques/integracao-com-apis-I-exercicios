@@ -92,12 +92,26 @@ export default function Musicas(props) {
       });
   };
 
+  const delPlaylist = async () => {
+    try {
+      await axios.delete(
+        `https://us-central1-labenu-apis.cloudfunctions.net/labefy/playlists/${props.playlist.id}`,
+        Headers
+      );
+      alert("Playlist removida");
+      props.recebePlaylists();
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
+
   useEffect(() => {
     recebeMusicas();
   }, []);
 
   return (
     <ContainerMusicas>
+      <button onClick={() => delPlaylist()}>X</button>
       <h2>{props.playlist.name}</h2>
       {musicas.map((musica) => {
         return (
